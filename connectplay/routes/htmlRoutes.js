@@ -1,27 +1,24 @@
 var db = require("../models");
 
-module.exports = function(app) {
-  // Load index page
-  app.get("/", function(req, res) {
-    db.Example.findAll({}).then(function(dbExamples) {
-      res.render("index", {
-        msg: "Welcome!",
-        examples: dbExamples
-      });
+module.exports = function (app) {
+  app.get('/', function (req, res) {
+    var drinks = [
+      { name: 'Bloody Mary', drunkness: 3 },
+      { name: 'Martini', drunkness: 5 },
+      { name: 'Scotch', drunkness: 10 }
+    ];
+    var tagline = "Any code of your own that you haven't looked at for six or more months might as well have been written by someone else.";
+
+    res.render('pages/index', {
+      drinks: drinks,
+      tagline: tagline
     });
   });
 
-  // Load example page and pass in an example by id
-  app.get("/example/:id", function(req, res) {
-    db.Example.findOne({ where: { id: req.params.id } }).then(function(dbExample) {
-      res.render("example", {
-        example: dbExample
-      });
-    });
+  app.get('/about', function (req, res) {
+    res.render('pages/about');
   });
 
-  // Render 404 page for any unmatched routes
-  app.get("*", function(req, res) {
-    res.render("404");
-  });
+
+
 };
